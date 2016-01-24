@@ -87,9 +87,11 @@ function generateReport () {
 }
 
 function validateReport (reports) {
-  // some form of testing here
+  // test if any field in reports is missing
+  // test if policy number contain 5 characters
+
   // for each test, console.log whether the test pass or fail, the reason, and for which customer
-  // return true; // return true when all validation checks out otherwise return false
+  // return true when all validation checks out otherwise return false
   return true;
 }
 
