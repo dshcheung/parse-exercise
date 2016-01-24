@@ -3,11 +3,13 @@ var csv              = require('fast-csv'); // require fast-csv module
 var fs               = require('fs'); // require the fs, filesystem module
 
 // initial valuables for customers
+// errors already handled by fs library
 var streamCustomers  = fs.createReadStream("csv/customers.csv");
 var customersDone    = false;
 var customers        = {};
 
 // initial valuables for policies
+// errors already handled by fs library
 var streamPolicies   = fs.createReadStream("csv/policies.csv");
 var policiesDone     = false;
 var policies         = {};
@@ -26,6 +28,9 @@ csv.fromStream(streamCustomers, {headers : ["id", "firstName", "lastName", "dob"
     };
   })
   .on("end", function(){
+    // because streaming is asynchronous, we don't know which stream will finish last
+    // therefore we have two boolean variable representing each stream
+    // and generateReport only when both stream is completed
     customersDone = true;
     generateReport();
   });
@@ -39,6 +44,9 @@ csv.fromStream(streamPolicies  , {headers : ["policyNumber", "id", "insuranceTyp
     };
   })
   .on("end", function(){
+    // because streaming is asynchronous, we don't know which stream will finish last
+    // therefore we have two boolean variable representing each stream
+    // and generateReport only when both stream is completed
     policiesDone = true;
     generateReport();
   });
