@@ -13,7 +13,7 @@ var policiesDone     = false;
 var policies         = {};
 
 // initializing the report csv file
-var currentDate = new Date();
+var currentDate     = new Date();
 var formattedDate   = currentDate.toISOString();
 var reportCSV       = fs.createWriteStream("report-" + formattedDate + ".csv");
 
