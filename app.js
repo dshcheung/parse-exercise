@@ -12,6 +12,11 @@ var streamPolicies   = fs.createReadStream("csv/policies.csv");
 var policiesDone     = false;
 var policies         = {};
 
+// initializing the report csv file
+var currentDate = new Date();
+var formattedDate   = currentDate.toISOString();
+var reportCSV       = fs.createWriteStream("report-" + formattedDate + ".csv");
+
 // start streaming data from customers.csv
 csv.fromStream(streamCustomers, {headers : ["id", "firstName", "lastName", "dob"]})
   .on("data", function(data){
@@ -77,8 +82,14 @@ function validateReport (reports) {
   // some form of testing here
   // for each test, console.log whether the test pass or fail, the reason, and for which customer
   // return true; // return true when all validation checks out otherwise return false
+  return true;
 }
 
 function generateCSV (reports) {
-  // your code to create a report.csv
+  csv
+    .write(reports, {headers: true})
+    .on("end", function(){
+      console.log("Successfully Generated Report!");
+    })
+    .pipe(reportCSV);
 }
